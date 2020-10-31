@@ -20,6 +20,22 @@ namespace ConsoleApp1
                 .OrderByDescending(t => t.Count).ToList();
         }
 
+        public static List<string> TextToSentences(string text)
+        {
+            string tmp = text
+                .Replace("\r", "")
+                .Replace("\n", "")
+                .Replace("• ", "");
+
+            return tmp
+                .Split('.')
+                .Where(p => p != "")
+                .ToList();
+        }
+
+        public static List<string> GetSentences(List<string> list, string text) =>
+            list.Where(p => p.Contains(text)).ToList();
+
         public static void SaveToFile(List<Dictionary> dictionaries)
         {
             using (System.IO.StreamWriter file =

@@ -15,6 +15,8 @@ namespace ConsoleApp1
             string text = System.IO.File.ReadAllText(@"C:\Работа\net.txt");
 
             List<Dictionary> dictionaries = Service.GetDictionary(text);
+            List<string> sentences = Service.TextToSentences(text);
+            List<string> list = Service.GetSentences(sentences, "might");
             Service.SaveToFile(dictionaries);
             Service.SaveToJSON(dictionaries);
         }
