@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,10 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             string text = System.IO.File.ReadAllText(@"C:\Работа\net.txt");
-            string tmp = Regex.Replace(text, "[^a-zA-Z ]+", "").Replace("  ", "");
-            string text2 = tmp.Replace(" ", "\n");
 
-            
-
-            System.IO.File.WriteAllText(@"C:\Работа\net2.txt", text2);
-
+            List<Dictionary> dictionaries = Service.GetDictionary(text);
+            Service.SaveToFile(dictionaries);
+            Service.SaveToJSON(dictionaries);
         }
     }
 }
