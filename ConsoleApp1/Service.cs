@@ -23,14 +23,22 @@ namespace ConsoleApp1
         public static List<string> TextToSentences(string text)
         {
             string tmp = text
-                .Replace("\r", "")
-                .Replace("\n", "")
-                .Replace("• ", "");
+                .Replace("\r\n", ".");
+            //    .Replace("\n", "")
+            //    .Replace("• ", "");
 
             return tmp
                 .Split('.')
                 .Where(p => p != "")
                 .ToList();
+        }
+
+        public static List<string> TextToSentencesV2(string text) 
+        {
+            string tmp = text.Replace("\r\n", " ").Replace("•", " ");
+            string[] sentences = Regex.Split(tmp, @"(?<=[\.!•\?])\s+");
+
+            return sentences.ToList();
         }
 
         public static List<string> GetSentences(List<string> list, string text) =>

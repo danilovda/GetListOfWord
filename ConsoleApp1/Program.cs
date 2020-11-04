@@ -16,9 +16,12 @@ namespace ConsoleApp1
 
             List<Dictionary> dictionaries = Service.GetDictionary(text);
             List<string> sentences = Service.TextToSentences(text);
-            List<string> list = Service.GetSentences(sentences, "might");
+            List<string> sentences2 = Service.TextToSentencesV2(text);
+
+            List<string> list = Service.GetSentences(sentences2, "might");
             Service.SaveToFile(dictionaries);
             Service.SaveToJSON(dictionaries);
         }
     }
 }
+
