@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -59,7 +60,18 @@ namespace ConsoleApp1
         public static void SaveToJSON(List<Dictionary> dictionaries)
         {
             string json = JsonConvert.SerializeObject(dictionaries.ToArray());
-            System.IO.File.WriteAllText(@"C:\Работа\net_json.txt", json);
+            System.IO.File.WriteAllText(@"C:\Работа\net.json", json);
+        }
+
+        public static List<Dictionary> LoadJson(string text)
+        {
+            List<Dictionary> items = null;
+            using (StreamReader r = new StreamReader(text))
+            {
+                string json = r.ReadToEnd();
+                items = JsonConvert.DeserializeObject<List<Dictionary>>(json);
+            }
+            return items;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace ConsoleApp1
             List<string> list = Service.GetSentences(sentences2, "might");
             Service.SaveToFile(dictionaries);
             Service.SaveToJSON(dictionaries);
+
+            List<Dictionary> dictionariesFromJson = Service.LoadJson(@"C:\Работа\net.json");
         }
     }
 }
