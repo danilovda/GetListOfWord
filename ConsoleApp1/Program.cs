@@ -12,17 +12,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string text = System.IO.File.ReadAllText(@"C:\Работа\net.txt");
+            string path = @"C:\Работа\";
+            string text = System.IO.File.ReadAllText(path + "net.txt");
 
-            List<Dictionary> dictionaries = Service.GetDictionary(text);
+            List<Dictionary> dictionaries = Service.GetDictionary(text);            
             List<string> sentences = Service.TextToSentences(text);
-            List<string> sentences2 = Service.TextToSentencesV2(text);
+            
+            Service.SaveToFile(dictionaries, path + "net_dictionary.txt");
+            Service.SaveToFile(sentences, path + "net_sentences.txt" );
 
-            List<string> list = Service.GetSentences(sentences2, "might");
-            Service.SaveToFile(dictionaries);
-            Service.SaveToJSON(dictionaries);
+            Service.SaveToJson(dictionaries, path + "net_dictionaries.json");
+            Service.SaveToJson(sentences, path + "net_sentences.json");
+            
+            List<Dictionary> dictionariesFromJson = Service.LoadJson<Dictionary>(path + "net_dictionaries.json");
+            List<string> sentencesFromJson = Service.LoadJson<string>(path + "net_sentences.json");
 
-            List<Dictionary> dictionariesFromJson = Service.LoadJson(@"C:\Работа\net.json");
+            List<string> list = Service.GetSentences(sentences, "might");
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ConsoleApp1
                 .OrderByDescending(t => t.Count).ToList();
         }
 
-        public static List<string> TextToSentences(string text)
+        public static List<string> TextToSentencesOld(string text)
         {
             string tmp = text
                 .Replace("\r\n", ".");
@@ -34,7 +34,7 @@ namespace ConsoleApp1
                 .ToList();
         }
 
-        public static List<string> TextToSentencesV2(string text) 
+        public static List<string> TextToSentences(string text) 
         {
             string tmp = text.Replace("\r\n", " ").Replace("•", " ");
             string[] sentences = Regex.Split(tmp, @"(?<=[\.!•\?])\s+");
@@ -45,33 +45,34 @@ namespace ConsoleApp1
         public static List<string> GetSentences(List<string> list, string text) =>
             list.Where(p => p.Contains(text)).ToList();
 
-        public static void SaveToFile(List<Dictionary> dictionaries)
+        public static void SaveToFile<T>(List<T> list, string path)
         {
-            using (System.IO.StreamWriter file =
-            new System.IO.StreamWriter(@"C:\Работа\net_line.txt"))
+            using (StreamWriter file =
+            new StreamWriter(path))
             {
-                foreach (var item in dictionaries)
+                foreach (var item in list)
                 {
-                    file.WriteLine($"{item.Name} {item.Count}");
+                    file.WriteLine(item.ToString());
                 }
             }
         }
 
-        public static void SaveToJSON(List<Dictionary> dictionaries)
+        public static void SaveToJson<T>(List<T> list, string path)
         {
-            string json = JsonConvert.SerializeObject(dictionaries.ToArray());
-            System.IO.File.WriteAllText(@"C:\Работа\net.json", json);
+            string json = JsonConvert.SerializeObject(list.ToArray());
+            File.WriteAllText(path, json);
         }
 
-        public static List<Dictionary> LoadJson(string text)
+        public static List<T> LoadJson<T>(string text)
         {
-            List<Dictionary> items = null;
+            List<T> items = null;
             using (StreamReader r = new StreamReader(text))
             {
                 string json = r.ReadToEnd();
-                items = JsonConvert.DeserializeObject<List<Dictionary>>(json);
+                items = JsonConvert.DeserializeObject<List<T>>(json);
             }
             return items;
         }
+
     }
 }
