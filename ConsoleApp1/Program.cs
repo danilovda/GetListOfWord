@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,20 +13,21 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Работа\";
-            string text = System.IO.File.ReadAllText(path + "net.txt");
+            Path path = new Path(@"C:\Работа\", "net");
+
+            string text = File.ReadAllText(path.FullPath);
 
             List<Dictionary> dictionaries = Service.GetDictionary(text);            
             List<string> sentences = Service.TextToSentences(text);
             
-            Service.SaveToFile(dictionaries, path + "net_dictionary.txt");
-            Service.SaveToFile(sentences, path + "net_sentences.txt" );
+            Service.SaveToFile(dictionaries, path.DictionariesTxt);
+            Service.SaveToFile(sentences, path.SentencesTxt);
 
-            Service.SaveToJson(dictionaries, path + "net_dictionaries.json");
-            Service.SaveToJson(sentences, path + "net_sentences.json");
+            Service.SaveToJson(dictionaries, path.DictionariesJson);
+            Service.SaveToJson(sentences, path.SentencesJson);
             
-            List<Dictionary> dictionariesFromJson = Service.LoadJson<Dictionary>(path + "net_dictionaries.json");
-            List<string> sentencesFromJson = Service.LoadJson<string>(path + "net_sentences.json");
+            List<Dictionary> dictionariesFromJson = Service.LoadJson<Dictionary>(path.DictionariesJson);
+            List<string> sentencesFromJson = Service.LoadJson<string>(path.SentencesJson);
 
             List<string> list = Service.GetSentences(sentences, "might");
         }
