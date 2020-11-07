@@ -13,7 +13,16 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Path path = new Path(@"C:\Работа\", "net");
+            Console.WriteLine("Enter a file name");
+            string fileName = Console.ReadLine();
+            
+            while (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + fileName + ".txt"))
+            {
+                Console.WriteLine($"File {fileName}.txt not found");
+                fileName = Console.ReadLine();
+            }
+
+            Path path = new Path(AppDomain.CurrentDomain.BaseDirectory, fileName);
 
             string text = File.ReadAllText(path.FullPath);
 
